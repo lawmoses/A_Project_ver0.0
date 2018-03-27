@@ -58,14 +58,6 @@ public class BoardController {
 	
 	@RequestMapping("/list")
 	public String list(Model model) throws Exception {
-	  
-		/*String boardid ="1";
-		  	if (boardid==null) boardid = "1";*/
-			
-		/*String pageNum = "1";
-			if (pageNum == null || pageNum == "") {
-				pageNum = "1";	}*/
-		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		int pageSize = 5;
 		int currentPage = Integer.parseInt(pageNum);
@@ -97,6 +89,42 @@ public class BoardController {
 	    
 			return "list";
 		}
+	
+	
+	@RequestMapping("/list2")
+	public String list2(Model model) throws Exception {
+		String boardid = "2";
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		int pageSize = 5;
+		int currentPage = Integer.parseInt(pageNum);
+		int startRow = (currentPage - 1) * pageSize + 1;
+		int endRow = currentPage * pageSize;
+		int count = 0;
+		int number = 0;
+		List articleList = null;
+		count = dbPro.getArticleCount(boardid);  
+		if (count > 0) {
+				articleList = dbPro.getArticles(startRow, endRow, boardid);	
+			}
+		number = count - (currentPage - 1) * pageSize;
+		int bottomLine = 3;
+		int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);
+		int startPage = 1 + (currentPage - 1) / bottomLine * bottomLine;
+		int endPage = startPage + bottomLine - 1;
+		if (endPage > pageCount) endPage = pageCount;
+
+		model.addAttribute("boardid", boardid);
+		model.addAttribute("count", count);
+		model.addAttribute("articleList", articleList);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("bottomLine", bottomLine);
+		model.addAttribute("endPage", endPage);
+		model.addAttribute("number", number);
+	    
+			return "list2";
+		}
+	
 	
 	
 	@RequestMapping("/writeFormUpload") //이것은 메소드 명과 상관 없다. 뷰단과 꼭 맞춰야한다.

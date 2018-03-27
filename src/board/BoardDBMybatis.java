@@ -24,6 +24,7 @@ public class BoardDBMybatis extends MybatisConnector {
 	SqlSession sqlSession;
 	
 	
+	//게시글 수 카운팅
 	public int getArticleCount(String boardid) {
 		int x = 0;
 		sqlSession= sqlSession();
@@ -34,19 +35,36 @@ public class BoardDBMybatis extends MybatisConnector {
 		return x;
 
 	}
-
-	public List getArticles(int startRow, int endRow, 
-			String boardid) {
+	
+	
+	//게시글 목록 가져오기
+	public List getArticles(int startRow, int endRow, String boardid) {
 		sqlSession= sqlSession();
 		Map map = new HashMap();
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
 		map.put("boardid", boardid);
-		List li = sqlSession.selectList(namespace+".getArticles",
-				map);
-		sqlSession.close();	return li;	}
+		List li = sqlSession.selectList(namespace+".getArticles",map);
+		sqlSession.close();	
+		return li;	
+		}
+	
+	//추가
+	//게시글 목록 가져오기 - 공지사항
+	public List getArticles2(int startRow, int endRow, String boardid) {
+		sqlSession= sqlSession();
+		Map map = new HashMap();
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		map.put("boardid", boardid);
+		List li = sqlSession.selectList(namespace+".getArticles2",map);
+		sqlSession.close();	
+		return li;	
+		}
 
 	
+	// 추가
+	// 게시글 추가
 	public void insertArticle(BoardDataBean article) {
 		sqlSession= sqlSession();
 	    int number = sqlSession.selectOne(namespace
@@ -71,11 +89,8 @@ public class BoardDBMybatis extends MybatisConnector {
 	
 	
 	
-	
-	public BoardDataBean getArticle
-	(int num , String boardid, String chk) {
-
-		
+	//게시글 가져오기
+	public BoardDataBean getArticle (int num , String boardid, String chk) {
 		sqlSession= sqlSession();
 		Map map = new HashMap();
 		map.put("num", num);
@@ -92,6 +107,8 @@ public class BoardDBMybatis extends MybatisConnector {
 		return article;	
 	}
 	
+	
+	//게시글 수정
 	public int updateArticle(BoardDataBean article) {
 		sqlSession= sqlSession();
 		int chk 
@@ -104,6 +121,7 @@ public class BoardDBMybatis extends MybatisConnector {
 		
 	}
 	
+	//게시글 삭제
 	public int deleteArticle(int num, String passwd, 
 			String boardid) throws Exception {
 		sqlSession= sqlSession();
