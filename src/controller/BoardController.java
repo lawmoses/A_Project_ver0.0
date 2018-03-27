@@ -56,9 +56,11 @@ public class BoardController {
 	
 	
 	
+	//게시글 리스트 - 자유게시판
 	@RequestMapping("/list")
 	public String list(Model model) throws Exception {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String boardid = "1";
 		int pageSize = 5;
 		int currentPage = Integer.parseInt(pageNum);
 		int startRow = (currentPage - 1) * pageSize + 1;
@@ -91,6 +93,8 @@ public class BoardController {
 		}
 	
 	
+	//추가
+	//게시글 리스트 - 공지
 	@RequestMapping("/list2")
 	public String list2(Model model) throws Exception {
 		String boardid = "2";
@@ -126,14 +130,14 @@ public class BoardController {
 		}
 	
 	
-	
+	// 게시글 쓰기 - 자유게시판
 	@RequestMapping("/writeFormUpload") //이것은 메소드 명과 상관 없다. 뷰단과 꼭 맞춰야한다.
 			//파일을 받아야하므로, 답글일 경우에는 넘,아리스타, 아리레벨을 겟방식으로 보내주기 떄문이다.
 	public ModelAndView writeFormUpload(BoardDataBean article)
 			throws Exception {
 	
 		ModelAndView mv = new ModelAndView();
-
+		String boardid = "1";
 		mv.addObject("num", article.getNum());
 		mv.addObject("ref", article.getRef());
 		mv.addObject("re_step", article.getRe_step());
@@ -149,7 +153,33 @@ public class BoardController {
 	}
 	
 	
+	//추가
+	//게시글 쓰기 - 공지게시판
+	@RequestMapping("/writeFormUpload2") //이것은 메소드 명과 상관 없다. 뷰단과 꼭 맞춰야한다.
+	//파일을 받아야하므로, 답글일 경우에는 넘,아리스타, 아리레벨을 겟방식으로 보내주기 떄문이다.
+		public ModelAndView writeFormUpload2(BoardDataBean article)
+			throws Exception {
+		
+		
+		ModelAndView mv = new ModelAndView();
+		String boardid = "2";
+		mv.addObject("num", article.getNum());
+		mv.addObject("ref", article.getRef());
+		mv.addObject("re_step", article.getRe_step());
+		mv.addObject("re_level", article.getRe_level());
+		mv.addObject("boardid", boardid); 
+			//writeFormUpload 당시에 boardid는 null이라서 article.getBoardid()안된다. 
+			//저장과 무관하게 1이 되는 것이다.
+		mv.addObject("pageNum", pageNum);
+			//ModelAndView로 바꾸는 방법이다.
+			//뷰단과 꼭 맞춰야한다.
+		mv.setViewName("writeFormUpload2");
+		return mv;
+		}
 	
+	
+	
+	// 게시글 쓰기 - 자유게시판
 	@RequestMapping("/writeProUpload")
 	//MultipartRequest 임포트 했다가 지움
 	//기존과 WriteProUploadAction 코드가 완전 다름, 손 볼거 많음
@@ -181,6 +211,42 @@ public class BoardController {
 		model.addAttribute("pageNum", pageNum);
 		return "redirect:list";
 	}
+	
+	
+	//추가
+	//게시글 쓰기 - 공지게시판
+	@RequestMapping("/writeProUpload2")
+	//MultipartRequest 임포트 했다가 지움
+	//기존과 WriteProUploadAction 코드가 완전 다름, 손 볼거 많음
+	//샌드리다이랙트는 스트링으로 받아야함???
+	public String writeProUpload2(MultipartHttpServletRequest request,
+								BoardDataBean article, Model model)
+								throws Exception {
+		//기존과 완전 다름
+		//MultipartRequest 임포트가 다름 
+		
+		ModelAndView mv = new ModelAndView();
+		MultipartFile multi = request.getFile("uploadfile");
+		String filename = multi.getOriginalFilename();
+		System.out.println("filename :[" + filename + "]");
+		if (filename != null && !filename.equals("")) {
+			String uploadPath = request.getRealPath("/")+"filesave"; // 줄쳐저있는것은, 사용하지 않았으면 하는 것이다. 
+			System.out.println(uploadPath);
+			FileCopyUtils.copy(multi.getInputStream(), new FileOutputStream(uploadPath + "/" + multi.getOriginalFilename()));
+			article.setFilename(filename);
+			article.setFilesize((int) multi.getSize());
+		} else {
+			article.setFilename("");
+			article.setFilesize(0);
+		}
+		// article.setIp(remoteId);
+		article.setIp(request.getRemoteAddr());
+		System.out.println(article);
+		dbPro.insertArticle(article);
+		model.addAttribute("pageNum", pageNum);
+		return "redirect:list2";
+	}
+	
 	
 	
 	@RequestMapping("/content")

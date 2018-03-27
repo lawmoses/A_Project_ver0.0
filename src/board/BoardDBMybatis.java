@@ -50,8 +50,8 @@ public class BoardDBMybatis extends MybatisConnector {
 		}
 	
 	//추가
-	//게시글 목록 가져오기 - 공지사항
-	public List getArticles2(int startRow, int endRow, String boardid) {
+	//공지 게시글 목록 가져오기 - 공지사항
+	/*public List getArticles2(int startRow, int endRow, String boardid) {
 		sqlSession= sqlSession();
 		Map map = new HashMap();
 		map.put("startRow", startRow);
@@ -60,11 +60,10 @@ public class BoardDBMybatis extends MybatisConnector {
 		List li = sqlSession.selectList(namespace+".getArticles2",map);
 		sqlSession.close();	
 		return li;	
-		}
+		}*/
 
 	
-	// 추가
-	// 게시글 추가
+	// 공지 게시글 추가
 	public void insertArticle(BoardDataBean article) {
 		sqlSession= sqlSession();
 	    int number = sqlSession.selectOne(namespace
@@ -86,6 +85,30 @@ public class BoardDBMybatis extends MybatisConnector {
 	    sqlSession.commit();
 	    sqlSession.close();
 	}
+	
+	// 추가
+	// 공지 게시글 추가
+	/*public void insertArticle2(BoardDataBean article) {
+			sqlSession= sqlSession();
+		    int number = sqlSession.selectOne(namespace
+		    		+".getNextNumber",article);
+		    if (article.getNum()!=0){
+		      sqlSession.update(namespace
+			    		+".updateRe_step",article);
+		      article.setRe_level(article.getRe_level()+1);
+		      article.setRe_step(article.getRe_step()+1);
+		     
+		    }  else {
+		    	  article.setRef(number);
+		    	  article.setRe_level(0);
+			      article.setRe_step(0);
+		    	
+		    }    article.setNum(number);
+		    
+		    sqlSession.insert(namespace	+".insertBoard2",article);
+		    sqlSession.commit();
+		    sqlSession.close();
+		}*/
 	
 	
 	

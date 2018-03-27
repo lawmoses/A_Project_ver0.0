@@ -6,13 +6,16 @@
 <html>
 <title>W3.CSS</title>
 
+<!-- 공지게시판 boardId 2번 -->
+
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 <body>
 
 <div class="w3-container" style="margin: 40px 100px;">
-  <h2 style="text-align: center;">게시판 : ${boardid} 번 (전체 글:${count})</h2>
+  <h2 style="text-align: center;">공지게시판 : ${boardid} 번 (전체 글:${count})</h2>
   
 	<p class="w3-right w3-padding-right-large">
 <!-- 수정  -->
@@ -32,7 +35,7 @@
 
 	<table class="w3-table-all w3-hoverable"  width="700">
     	<thead>
-      	<tr class="w3-teal">
+      	<tr class="w3-cyan">
       		<td align="center" width="50">번호</td>
 			<td align="center" width="250">제 목</td>
 			<td align="center" width="100">작성자</td>
