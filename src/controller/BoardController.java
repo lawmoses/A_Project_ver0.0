@@ -60,6 +60,7 @@ public class BoardController {
 	@RequestMapping("/list")
 	public String list(Model model) throws Exception {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		//
 		String boardid = "1";
 		int pageSize = 5;
 		int currentPage = Integer.parseInt(pageNum);
@@ -68,7 +69,6 @@ public class BoardController {
 		int count = 0;
 		int number = 0;
 		List articleList = null;
-			//BoardDBMybatis dbPro = BoardDBMybatis.getInstance();
 		count = dbPro.getArticleCount(boardid);  
 		if (count > 0) {
 				articleList = dbPro.getArticles(startRow, endRow, boardid);	
@@ -97,6 +97,7 @@ public class BoardController {
 	//게시글 리스트 - 공지
 	@RequestMapping("/list2")
 	public String list2(Model model) throws Exception {
+		//
 		String boardid = "2";
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		int pageSize = 5;
@@ -137,6 +138,7 @@ public class BoardController {
 			throws Exception {
 	
 		ModelAndView mv = new ModelAndView();
+		//
 		String boardid = "1";
 		mv.addObject("num", article.getNum());
 		mv.addObject("ref", article.getRef());
@@ -160,8 +162,8 @@ public class BoardController {
 		public ModelAndView writeFormUpload2(BoardDataBean article)
 			throws Exception {
 		
-		
 		ModelAndView mv = new ModelAndView();
+		//
 		String boardid = "2";
 		mv.addObject("num", article.getNum());
 		mv.addObject("ref", article.getRef());
@@ -248,18 +250,33 @@ public class BoardController {
 	}
 	
 	
-	
+	//글 내용보기
 	@RequestMapping("/content")
 	public String content(int num, Model model)
 						throws Exception {
 		
 			BoardDataBean article = dbPro.getArticle(num, boardid, "content"); 
-			
+			String boardid = "1";
 			model.addAttribute("article", article);
 			model.addAttribute("pageNum", pageNum);	 
 		 
 		return "content";
 	}
+	
+	
+	//글 내용보기
+		@RequestMapping("/content2")
+		public String content2(int num, Model model)
+							throws Exception {
+			
+				BoardDataBean article = dbPro.getArticle(num, boardid, "content"); 
+				String boardid = "2";
+				model.addAttribute("article", article);
+				model.addAttribute("pageNum", pageNum);	 
+			 
+			return "content2";
+		}
+	
 	
 	@RequestMapping("/updateForm")
 	public String updateForm(int num, Model model)
@@ -270,6 +287,9 @@ public class BoardController {
 		
 		return "updateForm";
 	}
+	
+	
+	
 
 	
 	@RequestMapping("/updatePro")

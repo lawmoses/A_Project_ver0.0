@@ -19,7 +19,7 @@
   
 	<p class="w3-right w3-padding-right-large">
 <!-- 수정  -->
-		<a href="writeFormUpload">글쓰기</a>	<!-- writeForm -->
+		<a href="writeFormUpload2">글쓰기</a>	<!-- writeForm -->
 	</p>
 
 	<c:if test="${count==0 }">

@@ -8,7 +8,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 public class MybatisConnector {
+	
 	public SqlSession sqlSession() { 	
+		
 		String resource = "mybatis-config.xml";
 		InputStream inputStream;
 		try {
