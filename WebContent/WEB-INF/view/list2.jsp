@@ -18,7 +18,8 @@
   <h2 style="text-align: center;">공지게시판 : ${boardid} 번 (전체 글:${count})</h2>
   
 	<p class="w3-right w3-padding-right-large">
-<!-- 수정  -->
+
+<!-- 수정 : writeFormUpload2 -->
 		<a href="writeFormUpload2">글쓰기</a>	<!-- writeForm -->
 	</p>
 
@@ -61,7 +62,9 @@
 			<c:if test="${article.re_level==0}">
 	 			<img src="../images/level.gif"  height="16">
 			</c:if>
-		 		<a href="content?num=${article.num}&pageNum=${currentPage}">
+			
+<!-- 수정 : content2  -->
+		 		<a href="content2?num=${article.num}&pageNum=${currentPage}">
 					${article.subject}</a> 
 
  			<c:if test="article.readcount>=20">

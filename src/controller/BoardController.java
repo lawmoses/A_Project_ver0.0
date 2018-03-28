@@ -46,7 +46,8 @@ public class BoardController {
 		if (pageNum != null && pageNum != "") this.pageNum = pageNum;
 	}
 	
-	
+
+//=======================================================================================	
 	
 	@RequestMapping("/index")
 	public String index() { //Model model
@@ -55,8 +56,9 @@ public class BoardController {
 	}
 	
 	
+//=======================================================================================
 	
-	//게시글 리스트 - 자유게시판
+		//게시글 리스트 (1)  - 자유게시판
 	@RequestMapping("/list")
 	public String list(Model model) throws Exception {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -93,8 +95,8 @@ public class BoardController {
 		}
 	
 	
-	//추가
-	//게시글 리스트 - 공지
+		//추가
+		//게시글 리스트 (2) - 공지게시판
 	@RequestMapping("/list2")
 	public String list2(Model model) throws Exception {
 		//
@@ -130,8 +132,9 @@ public class BoardController {
 			return "list2";
 		}
 	
-	
-	// 게시글 쓰기 - 자유게시판
+//=======================================================================================	
+
+		// 게시글 쓰기 Form (1)  - 자유게시판
 	@RequestMapping("/writeFormUpload") //이것은 메소드 명과 상관 없다. 뷰단과 꼭 맞춰야한다.
 			//파일을 받아야하므로, 답글일 경우에는 넘,아리스타, 아리레벨을 겟방식으로 보내주기 떄문이다.
 	public ModelAndView writeFormUpload(BoardDataBean article)
@@ -155,8 +158,8 @@ public class BoardController {
 	}
 	
 	
-	//추가
-	//게시글 쓰기 - 공지게시판
+		//추가
+		//게시글 쓰기 Form (2) - 공지게시판
 	@RequestMapping("/writeFormUpload2") //이것은 메소드 명과 상관 없다. 뷰단과 꼭 맞춰야한다.
 	//파일을 받아야하므로, 답글일 경우에는 넘,아리스타, 아리레벨을 겟방식으로 보내주기 떄문이다.
 		public ModelAndView writeFormUpload2(BoardDataBean article)
@@ -178,10 +181,10 @@ public class BoardController {
 		mv.setViewName("writeFormUpload2");
 		return mv;
 		}
+
+//=======================================================================================	
 	
-	
-	
-	// 게시글 쓰기 - 자유게시판
+		// 게시글 쓰기 Pro (1) - 자유게시판
 	@RequestMapping("/writeProUpload")
 	//MultipartRequest 임포트 했다가 지움
 	//기존과 WriteProUploadAction 코드가 완전 다름, 손 볼거 많음
@@ -215,8 +218,8 @@ public class BoardController {
 	}
 	
 	
-	//추가
-	//게시글 쓰기 - 공지게시판
+		//추가
+		//게시글 쓰기 Pro (2) - 공지게시판
 	@RequestMapping("/writeProUpload2")
 	//MultipartRequest 임포트 했다가 지움
 	//기존과 WriteProUploadAction 코드가 완전 다름, 손 볼거 많음
@@ -249,8 +252,9 @@ public class BoardController {
 		return "redirect:list2";
 	}
 	
+//=======================================================================================
 	
-	//글 내용보기
+		//게시글 내용보기 (1) - 자유게시판
 	@RequestMapping("/content")
 	public String content(int num, Model model)
 						throws Exception {
@@ -263,37 +267,49 @@ public class BoardController {
 		return "content";
 	}
 	
+		//추가
+		//게시글 내용보기 (2) - 공지게시판
+	@RequestMapping("/content2")
+	public String content2(int num, Model model)
+						throws Exception {
+		
+			BoardDataBean article = dbPro.getArticle(num, boardid, "content"); 
+			String boardid = "2";
+			model.addAttribute("article", article);
+			model.addAttribute("pageNum", pageNum);	 
+		 
+		return "content2";
+	}
 	
-	//글 내용보기
-		@RequestMapping("/content2")
-		public String content2(int num, Model model)
-							throws Exception {
-			
-				BoardDataBean article = dbPro.getArticle(num, boardid, "content"); 
-				String boardid = "2";
-				model.addAttribute("article", article);
-				model.addAttribute("pageNum", pageNum);	 
-			 
-			return "content2";
-		}
+//=======================================================================================	
 	
-	
+		//게시글 수정 Form (1) - 자유게시판
 	@RequestMapping("/updateForm")
 	public String updateForm(int num, Model model)
 			throws Exception {
 		
 	BoardDataBean article =  dbPro.getArticle(num, boardid, "update");
 	model.addAttribute("article", article);
-		
 		return "updateForm";
 	}
 	
 	
+		//게시글 수정 Form (2) - 공지게시판
+	@RequestMapping("/updateForm2")
+	public String updateForm2(int num, Model model)
+			throws Exception {
+		
+	BoardDataBean article =  dbPro.getArticle(num, boardid, "update");
+	model.addAttribute("article", article);
+		return "updateForm2";
+	}
 	
+	
+//=======================================================================================
 
-	
+		//게시글 수정 Pro (1) - 자유게시판
 	@RequestMapping("/updatePro")
-	public String process(BoardDataBean article, Model model)
+	public String updatePro(BoardDataBean article, Model model)
 			throws Exception {
 		
 	 	int chk= dbPro.updateArticle(article); 
@@ -302,7 +318,20 @@ public class BoardController {
 		return "updatePro";
 	}
 	
+		//게시글 수정 Pro (2) - 공지게시판
+	@RequestMapping("/updatePro2")
+	public String updatePro2(BoardDataBean article, Model model)
+			throws Exception {
+		
+	 	int chk= dbPro.updateArticle(article); 
+	 	model.addAttribute("chk", chk);
+	 	model.addAttribute("pageNum", pageNum);	 
+		return "updatePro2";
+	}
 	
+//=======================================================================================
+	
+		//게시글 삭제 Form (1) - 자유게시판
 	@RequestMapping(value = "deleteForm")
 		//value = "deleteForm" 이렇게 하면 몇개 더 할 수 있는 장점이 있다.
 		//어노테이션은 오브젝트이다. 몇개 걸려있는 것이다.
@@ -316,6 +345,23 @@ public class BoardController {
 		return mv;
 	}
 	
+	//게시글 삭제 Form (2) - 공지게시판
+	@RequestMapping(value = "deleteForm2")
+		//value = "deleteForm" 이렇게 하면 몇개 더 할 수 있는 장점이 있다.
+		//어노테이션은 오브젝트이다. 몇개 걸려있는 것이다.
+	public ModelAndView deleteForm2(int num)
+			throws Exception {
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("num", num);
+		mv.addObject("pageNum", pageNum);
+		mv.setViewName("deleteForm2");		
+		return mv;
+	}
+		
+//=======================================================================================
+	
+		//게시글 삭제 Pro (1) - 자유게시판
 	@RequestMapping(value = "deletePro")
 	public ModelAndView deletePro(int num, String passwd)
 			throws Exception {
@@ -326,5 +372,17 @@ public class BoardController {
 		mv.setViewName("deletePro");
 		return mv;
 	}
+	
+	//게시글 삭제 Pro (2) - 공지게시판
+		@RequestMapping(value = "deletePro2")
+		public ModelAndView deletePro2(int num, String passwd)
+				throws Exception {
+			ModelAndView mv = new ModelAndView();
+			int check = dbPro.deleteArticle(num, passwd, boardid); 
+			mv.addObject("check", check);
+			mv.addObject("pageNum", pageNum);
+			mv.setViewName("deletePro2");
+			return mv;
+		}
 	
 }

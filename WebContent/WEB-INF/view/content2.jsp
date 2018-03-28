@@ -34,21 +34,28 @@
    			<td align="center" width="125" >글내용</td>
    			<td align="left" width="375" colspan="3"><pre>${article.content}</pre></td>
    		</tr>   
+    
     	<tr height="30">
+<!-- 수정:updateForm2 -->
 			<td colspan="4"  class="w3-center">
   				<input type="button" value="글수정" 
    					onclick="document.location.href=
- 					'updateForm?num=${article.num}&pageNum=${pageNum}'">
+ 					'updateForm2?num=${article.num}&pageNum=${pageNum}'">
          	&nbsp;&nbsp;&nbsp;&nbsp;
+<!-- 수정:deleteForm2 -->
          		<input type="button" value="글삭제" 
          			onclick="document.location.href=
-					'deleteForm?num=${article.num}&pageNum=${pageNum}'">
+					'deleteForm2?num=${article.num}&pageNum=${pageNum}'">
          	&nbsp;&nbsp;&nbsp;&nbsp;
+<!-- 수정:writeFormUpload2 -->
          		<input type="button" value="답글쓰기" 
-         onclick="document.location.href='writeFormUpload2?num=${article.num}&ref=${article.ref}&re_step=${article.re_step}&re_level=${article.re_level}&pageNum=${pageNum}'">
+         onclick="document.location.href=
+         'writeFormUpload2?num=${article.num}&ref=${article.ref}&re_step=${article.re_step}&re_level=${article.re_level}&pageNum=${pageNum}'">
          	&nbsp;&nbsp;&nbsp;&nbsp;
+<!-- 수정:list2 -->
          		<input type="button" value="글목록" 
- 					onclick="document.location.href='list?pageNum=${pageNum}'">
+ 					onclick="document.location.href=
+ 					'list2?pageNum=${pageNum}'">
       		</td>   
       	</tr>     
       </table>

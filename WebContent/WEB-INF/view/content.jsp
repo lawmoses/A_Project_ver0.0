@@ -45,7 +45,8 @@
 					'deleteForm?num=${article.num}&pageNum=${pageNum}'">
          	&nbsp;&nbsp;&nbsp;&nbsp;
          		<input type="button" value="답글쓰기" 
-         onclick="document.location.href='writeFormUpload2?num=${article.num}&ref=${article.ref}&re_step=${article.re_step}&re_level=${article.re_level}&pageNum=${pageNum}'">
+         onclick="document.location.href=
+         	'writeFormUpload?num=${article.num}&ref=${article.ref}&re_step=${article.re_step}&re_level=${article.re_level}&pageNum=${pageNum}'">
          	&nbsp;&nbsp;&nbsp;&nbsp;
          		<input type="button" value="글목록" 
  					onclick="document.location.href='list?pageNum=${pageNum}'">

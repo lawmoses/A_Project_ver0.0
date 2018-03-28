@@ -18,7 +18,8 @@
   
   <!--  글쓰기 버튼  -->
 	<p class="w3-right w3-padding-right-large">
-	<!-- 수정  -->
+
+<!-- 수정 : writeFormUpload -->
 		<a href="writeFormUpload">글쓰기</a>	<!-- writeForm -->
 	</p>
 
